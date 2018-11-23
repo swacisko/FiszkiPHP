@@ -1,0 +1,36 @@
+CREATE TABLE Memobox(
+	ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	jezyk varchar(30),
+	opis varchar(30),
+	liczbaPrzegrodek INT UNSIGNED NOT NULL
+);
+
+CREATE TABLE Przegrodka(
+	NUMER INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	pojemnosc INT UNSIGNED NOT NULL,
+	memoboxID INT UNSIGNED,
+
+	FOREIGN KEY (memoboxID) REFERENCES Memobox(ID)
+);
+
+CREATE TABLE Fiszka(
+	ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	tekst1 VARCHAR(150),
+	tekst2 VARCHAR(150),
+	numerPrzegrodki INT UNSIGNED,
+	numerWPrzegrodce INT UNSIGNED,
+	
+	FOREIGN KEY (numerPrzegrodki) REFERENCES Przegrodka(NUMER)
+);
+
+
+CREATE TABLE Przejscie(
+	data DATE,
+	fiszkaID INT UNSIGNED,
+	przegrodkaZ INT UNSIGNED,
+	przegrodkaDo INT UNSIGNED,
+
+	FOREIGN KEY (fiszkaID) REFERENCES Fiszka(ID),
+	FOREIGN KEY (przegrodkaZ) REFERENCES Przegrodka(NUMER),
+	FOREIGN KEY (przegrodkaDo) REFERENCES Przegrodka(NUMER)
+);

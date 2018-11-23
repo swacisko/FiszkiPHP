@@ -1,0 +1,56 @@
+CREATE PROCEDURE myproc()
+BEGIN
+	DECLARE @PRZEGRODKI, @COUNT, @POJEMNOSC, @MEMOID, @TOTAL, @FISZKI INT DEFAULT 0;
+	SET @PRZEGRODKI = 4;
+
+	SELECT @PRZEGRODKI;
+
+	INSERT INTO Memobox VALUES ( NULL, 'angielski', 'dowolnie, byle po angielsku', @PRZEGRODKI );
+
+
+	SET @COUNTER = 1;
+
+	SET @POJEMNOSC = 10;
+
+	SET @MEMOID = 0;
+	SELECT ID INTO @MEMOID FROM Memobox LIMIT 1;
+
+	SELECT @MEMOID;
+
+	SELECT @COUNTER, @PRZEGRODKI;
+
+	WHILE (@COUNTER < @PRZEGRODKI) DO
+		SELECT @COUNTER, @PRZEGRODKI;
+		
+		INSERT INTO Przegrodka (pojemnosc,memoboxID) VALUES ( @POJEMNOSC, @MEMOID  );
+
+		SET @COUNTER = @COUNTER + 1;
+		SET @POJEMNOSC = @POJEMNOSC + 10;
+	END WHILE;
+
+
+
+	SET @TOTAL = 70;
+
+	SET @FISZKI = 1;
+
+	SET @COUNT = 1;
+
+	WHILE @FISZKI <= @TOTAL DO
+
+		INSERT INTO Fiszka
+			VALUES( NULL, CONCAT( 'Fiszka #', @FISZKI ), CONCAT( 'Flash card #', @FISZKI ), @COUNT, @FISZKI );
+
+		SET @COUNT = IF( $FISZKI == (
+						SELECT SUM(pojemosc)
+						FROM Przegrodka  
+						WHERE Przegrodka.NUMER <= $COUNT
+						), @COUNT+1, @COUNT );
+
+		SET @FISZKI = @FISZKI + 1;
+	END  WHILE;
+
+END;
+
+
+CALL myproc();

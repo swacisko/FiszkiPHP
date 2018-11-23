@@ -17,25 +17,17 @@
 
 <?php
 
-	$host = 'mysql';
-	$user = 'user';
-	$dbname = 'mydb';
-	$passwd = 'mypass';
-
-	echo "siemanko <br>";
-
-	$dsn = "mysql:host=$host;dbname=$dbname";
 
 
 	try{
-		echo "siemanko przed PDO<br>";
-		if (!defined('PDO::ATTR_DRIVER_NAME'))
-		echo 'PDO is unavailable<br/>';
+		require("./dbphp/connect.php");
 
-		$db = new PDO( $dsn, $user, $passwd );
+		require("./dbphp/clearTables.php");
+
+		require("./dbphp/createTables.php");
+		require("./dbphp/initializeDatabase.php");
+
 		
-		$query = "SELECT content1";
-		echo "Siemanko po PDO <br>";
 
 	}catch( PDOException $e ){
 		echo "Błąd: ". $e->getMessage();
@@ -43,7 +35,7 @@
 	}
 
 
-	$currentCardId = $_POST['currentCardId'];
+	
 ?>
 
 <body>
@@ -75,7 +67,10 @@
 					<input type="submit" name="sprawdzTlumaczenie" value="Sprawdź tłumaczenie"> 	
 					<br>
 					<input type="submit" name="nastepnaFiszka" value="Przejdź do następnej fiszki"> 
-<?php		$currentCardId++;		echo	"<input type=\"text\" value=\"$currentCardId\" name=\"currentCardId\"> "; ?>
+					<?php		$currentCardId = $_POST['currentCardId'];
+					$currentCardId++;		
+					echo	"<input type=\"text\" value=\"$currentCardId\" name=\"currentCardId\"> "; 
+					?>
 				</td>""
 			</tr>
 			<tr>
