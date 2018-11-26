@@ -13,13 +13,14 @@ CREATE TABLE Memobox(
 	ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	jezyk varchar(30),
 	opis varchar(30),
+        aktualnaPrzegrodka INT,
 	liczbaPrzegrodek INT UNSIGNED NOT NULL
 ) ";
 noParamQuery($db,$zapytanie);
 
 $zapytanie = "
 CREATE TABLE Przegrodka(
-	NUMER INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	NUMER INT UNSIGNED PRIMARY KEY,
 	pojemnosc INT UNSIGNED NOT NULL,
 	memoboxID INT UNSIGNED,
 

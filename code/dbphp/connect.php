@@ -38,5 +38,5 @@
 	      	return $polecenie;
 	  	}
 
-		echo "connected <\br>";
+		//echo "connected <\br>";
 ?>

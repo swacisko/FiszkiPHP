@@ -1,14 +1,14 @@
 <?php
 	function initializeDatabase($db){
 		$przegrodki = 4;
-		$zapytanie = "INSERT INTO Memobox VALUES ( NULL, 'angielski', 'dowolnie, byle po angielski', ?)";
+                $przegrodki += 2;
+		$zapytanie = "INSERT INTO Memobox VALUES ( NULL, 'angielski', 'wszystko, byle po angielsku', 1 , ?)";
 		$polecenie = $db->prepare($zapytanie);
 		$polecenie->bindParam( 1, $przegrodki );
 		$polecenie->execute();
 
 		echo "jest ok </br>";
 
-		$count = 1;
 		$count = 1;
 		$pojemnosc = 10;
 
@@ -25,12 +25,12 @@
 		$memoid = $wynik[0][0];
 
 	echo "memoid $memoid </br>";
-
+                $counter = 0;
 		while( $counter < $przegrodki ){
 		//	echo "first while </br>";
-			$zapytanie = "INSERT INTO Przegrodka VALUES( NULL, ?,?  )";
+			$zapytanie = "INSERT INTO Przegrodka VALUES( ?, ?,?  )";
 
-			dbquery( $db, $zapytanie, $pojemnosc, $memoid );
+			dbquery( $db, $zapytanie, $counter, $pojemnosc, $memoid );
 			/*$polecenie = $db->prepare($zapytanie);
 			$polecenie->bindParam('dd', $pojemnosc, $memoid);
 			$polecenie->execute();*/

@@ -1,0 +1,39 @@
+		.divTable{ 
+			display: flex;      
+		/*	flex-direction: column;    */
+            width: 100%;
+            height: 100%;
+            justify-content: center;            
+        }
+        
+        .begOptionButton{
+            width : 100%;
+            height : 100%;   
+            font-size: 3vw;
+        }
+        
+        .divTableRow{
+            display: flex;
+            flex-direction: row;
+            width: 50%;
+        }
+        
+        .divTableCell{
+            width : 100%;
+            height : 100%;
+            background-color: white;
+            text-align: center;
+            overflow-wrap: break-word;
+            margin: 2px;
+        }
+
+        .border{
+        	border: solid;
+        	border-color: black;
+        }
+        
+        .blue{ background-color: aqua }
+        .orange{ background-color: orange }
+        .green{background-color: lawngreen}
+
+
