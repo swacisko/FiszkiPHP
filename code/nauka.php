@@ -3,11 +3,11 @@
     
 <head>   
     <title> Nauka </title>
-    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-    
+    <h1 style="text-align: center"> Rozpoczynamy naukę </h1>
     <?php
         require("./dbphp/connect.php");
         require( "Fiszka.php" );
@@ -33,8 +33,8 @@
         }
         
         $fiszka = new Fiszka( $wynik[0][0], $wynik[0][1], $wynik[0][2], $wynik[0][3], $wynik[0][4] );
-        
-    ?>
+         
+   ?>
     
     <div class="divTable">
         <div class="divTableRow">
@@ -49,8 +49,18 @@
             </div>
             
             
-        </div>
+        <form action="index.php" method="POST">
+        </div>  
         
+         <div class="divTableRow">
+            <div class="divTableCell border">
+                <input class="goodAnsButton" type="submit" name="goodAns" value="Umiem">
+            </div> 
+            <div class="divTableCell border">
+                <input class="badAnsButton" type="submit" name="goodAns" value="Nie umiem">
+            </div>   
+        </div>
+        </form>
         
     </div>
 

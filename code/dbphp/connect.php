@@ -30,12 +30,12 @@
 				return $polecenie;
 			}
 
-	     	for($i = 2 ; $i < func_num_args(); $i++) {
-	     		$polecenie->bindParam($i-1, func_get_arg($i), PDO::PARAM_STR );
-	      	}
+                    for($i = 2 ; $i < func_num_args(); $i++) {
+                            $polecenie->bindParam($i-1, func_get_arg($i), PDO::PARAM_STR );
+                    }
 
-	      	$polecenie->execute();
-	      	return $polecenie;
+                    $polecenie->execute();
+                    return $polecenie;
 	  	}
 
 		//echo "connected <\br>";
