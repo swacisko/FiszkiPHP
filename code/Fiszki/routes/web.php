@@ -10,24 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PagesController@home' );
 
 
-Route::get('/learning', function () {
-    return view('learning');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 
-Route::get('/progress', function () {
-    return view('progress');
-});
-
-
-Route::get('/management', function () {
-    return view('management');
-});
-
+Route::get('/learning', 'PagesController@learning' );
+Route::get('/progress', 'PagesController@progress' );
+Route::get('/management', 'PagesController@management' );
 
