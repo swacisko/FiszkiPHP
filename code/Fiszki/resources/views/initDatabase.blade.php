@@ -4,6 +4,10 @@
 
 @section('content')
 
-    <h1>Progress section</h1>
+    <h1> Databse test init </h1>
+
+
+
+
 
 @endsection

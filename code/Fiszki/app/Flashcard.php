@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Fiszka extends Model
+class Flashcard extends Model
 {
     //
 }

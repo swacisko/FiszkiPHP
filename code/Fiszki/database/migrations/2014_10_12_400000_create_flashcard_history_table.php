@@ -19,7 +19,7 @@ class CreateFlashcardHistoryTable extends Migration
         Schema::create('flashcard_history', function (Blueprint $table) {
 
             $table->unsignedInteger('flashcard_id');
-            $table->foreign('flashcard_id')->references('id')->on('flashcard')->onDelete('cascade');
+            $table->foreign('flashcard_id')->references('id')->on('flashcards')->onDelete('cascade');
 
             $table->integer('from_compartment');
             $table->integer('to_compartment');

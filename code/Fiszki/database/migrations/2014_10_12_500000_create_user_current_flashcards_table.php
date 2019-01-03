@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserCurrentFlashcardTable extends Migration
+class CreateUserCurrentFlashcardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,15 +17,15 @@ class CreateUserCurrentFlashcardTable extends Migration
         /*
          * Table representing current state of a user for given memobox.
          */
-        Schema::create('user_current_flashcard', function(Blueprint $table){
+        Schema::create('user_current_flashcards', function(Blueprint $table){
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->unsignedInteger('flashcard_id');
-            $table->foreign('flashcard_id')->references('id')->on('flashcard');
+            $table->foreign('flashcard_id')->references('id')->on('flashcards');
 
             $table->unsignedInteger('memobox_id');
-            $table->foreign( 'memobox_id' )->references('id')->on('memobox');
+            $table->foreign( 'memobox_id' )->references('id')->on('memoboxes');
             $table->timestamps();
         });
 
@@ -38,6 +38,6 @@ class CreateUserCurrentFlashcardTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_current_flashcard');
+        Schema::dropIfExists('user_current_flashcards');
     }
 }

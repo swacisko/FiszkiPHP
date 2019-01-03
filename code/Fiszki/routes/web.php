@@ -13,12 +13,36 @@
 Route::get('/', 'PagesController@home' );
 
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
+/*
+ * GET /projects (index)
+ *
+ * GET /projects/create (create)
+ *
+ * GET /projects/1 (show)
+ *
+ * POST /projects (store)
+ *
+ * GET /projects/edit/1 (edit)
+ *
+ * PATCH /project/1 (update)
+ *
+ * DELETE /project/1 (destroy)
+ *
+ */
 
 Route::get('/learning', 'PagesController@learning' );
 Route::get('/progress', 'PagesController@progress' );
 Route::get('/management', 'PagesController@management' );
+Route::get('/initDatabase', 'PagesController@initDatabase' );
 
+
+
+
+Route::resource( 'flashcards', 'FlashcardController' );
+
+//Route::get('/flashcards/create', 'FlashcardController@create' );
+//Route::get( '/flashcards/{flashcard}', 'FlashcardController@show' );
+//Route::get('/flashcards/{flashcard}/edit', 'FlashcardController@edit');
+//Route::post('/flashcards', 'FlashcardController@store' );
+//Route::patch( '/flashcards/{flashcard}', 'FlashcardController@update' );
+//Route::delete( '/flashcards/{flashcard}', 'FlashcardController@destroy' );//

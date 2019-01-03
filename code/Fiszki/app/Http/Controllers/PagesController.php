@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Flashcard;
 
 class PagesController extends Controller
 {
     public function home(){
-        return view( 'home' );
+        return view( 'index' );
     }
 
     public function learning(){
@@ -19,7 +20,18 @@ class PagesController extends Controller
     }
 
     public function management(){
-        return view( 'management' );
+
+        $flashcards = Flashcard::all();
+
+        return view( 'management', compact('flashcards') );
+    }
+
+    public function initDatabase(){
+
+
+
+
+        return view('initDatabase');
     }
 
 }

@@ -4,9 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Memobox extends Model
+class FlashcardHistory extends Model
 {
     //
-
-
 }

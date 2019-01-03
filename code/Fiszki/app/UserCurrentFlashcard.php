@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Przegrodka extends Model
+class UserCurrentFlashcard extends Model
 {
     //
 }

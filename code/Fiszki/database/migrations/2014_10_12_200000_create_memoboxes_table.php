@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMemoboxTable extends Migration
+class CreateMemoboxesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMemoboxTable extends Migration
      */
     public function up()
     {
-        Schema::create('memobox', function (Blueprint $table) {
+        Schema::create('memoboxes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('description');
 
@@ -23,6 +23,15 @@ class CreateMemoboxTable extends Migration
             $table->integer('number_of_compartments');
             $table->timestamps();
         });
+
+        DB::table('memoboxes')->insert(
+            array(
+                'description' => 'ToLearn',
+                'user_id' => 1,
+                'number_of_compartments' => 5
+            )
+        );
+
     }
 
     /**
@@ -32,6 +41,6 @@ class CreateMemoboxTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('memobox');
+        Schema::dropIfExists('memoboxes');
     }
 }
