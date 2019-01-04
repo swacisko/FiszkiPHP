@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1> Databse test init </h1>
+    <h1 class="title"> Databse test init </h1>
 
 
 

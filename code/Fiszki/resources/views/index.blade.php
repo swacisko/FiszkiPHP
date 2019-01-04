@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1> Welcome in the world of flashcards </h1>
+    <h1 class="title"> Welcome in the world of flashcards </h1>
 
     <ul>
 
@@ -17,9 +17,9 @@
         <li>
             <a href="/management"> Manage your flashcards</a>
         </li>
-        <li>
-            <a href="/initDatabase"> Init database for tests</a>
-        </li>
+        {{--<li>--}}
+            {{--<a href="/initDatabase"> Init database for tests</a>--}}
+        {{--</li>--}}
 
     </ul>
 

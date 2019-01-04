@@ -21,17 +21,13 @@ class PagesController extends Controller
 
     public function management(){
 
-        $flashcards = Flashcard::all();
+//        $flashcards = Flashcard::all();
 
-        return view( 'management', compact('flashcards') );
+        return view( 'management'/*, compact('flashcards')*/ );
     }
 
-    public function initDatabase(){
-
-
-
-
-        return view('initDatabase');
-    }
+//    public function initDatabase(){
+//        return view('initDatabase');
+//    }
 
 }

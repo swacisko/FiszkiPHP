@@ -22,7 +22,7 @@ Route::get('/', 'PagesController@home' );
  *
  * POST /projects (store)
  *
- * GET /projects/edit/1 (edit)
+ * GET /projects/1/edit (edit)
  *
  * PATCH /project/1 (update)
  *
@@ -33,7 +33,7 @@ Route::get('/', 'PagesController@home' );
 Route::get('/learning', 'PagesController@learning' );
 Route::get('/progress', 'PagesController@progress' );
 Route::get('/management', 'PagesController@management' );
-Route::get('/initDatabase', 'PagesController@initDatabase' );
+//Route::get('/initDatabase', 'PagesController@initDatabase' );
 
 
 

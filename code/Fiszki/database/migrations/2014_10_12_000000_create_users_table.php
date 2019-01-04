@@ -23,13 +23,13 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('users')->insert(
-            array(
-                'email' => 'username@domain.com',
-                'name' => 'username',
-                'password' => 'userpass'
-            )
-        );
+//        DB::table('users')->insert(
+//            array(
+//                'email' => 'username@domain.com',
+//                'name' => 'username',
+//                'password' => 'userpass'
+//            )
+//        );
 
     }
 

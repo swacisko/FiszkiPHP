@@ -4,6 +4,6 @@
 
 @section('content')
 
-    <h1>Progress section</h1>
+    <h1 class="title">Progress section</h1>
 
 @endsection

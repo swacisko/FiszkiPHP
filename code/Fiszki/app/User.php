@@ -27,4 +27,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function flashcards(){
+        return $this->hasMany( Flashcard::class );
+    }
+
+
+    public function memoboxes(){
+        return $this->hasMany(Memobox::class);
+    }
 }

@@ -29,8 +29,8 @@ class CreateFlashcardsTable extends Migration
             $table->foreign('parent_flashcard_id')->references('id')->on('flashcards');
 
             $table->string('category')->default('no category');
-            $table->string('side1_text')->default('');
-            $table->string('side2_text')->default('');
+            $table->string('side1_text',500)->default('');
+            $table->string('side2_text', 500)->default('');
             $table->integer( 'number_of_compartment' )->default(0); // number of compartment in which this card currrently lays in given memobox
             $table->integer( 'number_in_compartment' )->default(0); //
 
@@ -41,19 +41,19 @@ class CreateFlashcardsTable extends Migration
             $table->date( 'last_edit_date' ); // date of last edit of this card. Needed to notify other users that has this card as a parent
         });
 
-        $N = 2;
-        for( $i = 1; $i <= $N; ++$i ){
-            DB::table('flashcards')->insert(
-                array(
-                    'user_id' => NULL,
-                    'parent_flashcard_id' => NULL,
-                    'category' => "category $i",
-                    'side1_text' => "side1_text = $i",
-                    'side2_text' => "side2_text = $i",
-                    'last_edit_date' => date('Y-m-d H:i:s')
-                )
-            );
-        }
+//        $N = 2;
+//        for( $i = 1; $i <= $N; ++$i ){
+//            DB::table('flashcards')->insert(
+//                array(
+//                    'user_id' => NULL,
+//                    'parent_flashcard_id' => NULL,
+//                    'category' => "category $i",
+//                    'side1_text' => "side1_text = $i",
+//                    'side2_text' => "side2_text = $i",
+//                    'last_edit_date' => date('Y-m-d H:i:s')
+//                )
+//            );
+//        }
 
 
     }

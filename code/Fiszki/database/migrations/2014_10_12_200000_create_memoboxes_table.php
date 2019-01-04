@@ -17,20 +17,20 @@ class CreateMemoboxesTable extends Migration
             $table->increments('id');
             $table->string('description');
 
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable()->default(NULL);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // id of the user that owns this memobox
 
             $table->integer('number_of_compartments');
             $table->timestamps();
         });
 
-        DB::table('memoboxes')->insert(
-            array(
-                'description' => 'ToLearn',
-                'user_id' => 1,
-                'number_of_compartments' => 5
-            )
-        );
+//        DB::table('memoboxes')->insert(
+//            array(
+//                'description' => 'ToLearn',
+//                'user_id' => 1,
+//                'number_of_compartments' => 5
+//            )
+//        );
 
     }
 
