@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
+use App\Memobox;
 
 class Flashcard extends Model
 {
@@ -11,10 +13,11 @@ class Flashcard extends Model
     ];
 //    protected $guarded = []; // inverse of $fillable
 
-    public function assignUser(){
-        return $this;
-//        return $this->hasOne('User');
-    }
+//    public function update( $f ){
+//        foreach( $f as $key => $value ){
+//            $this->$key = $value;
+//        }
+//    }
 
     /*
      * Moves given flashcard to the first compartment within the same memobox
@@ -40,10 +43,18 @@ class Flashcard extends Model
     /*
      * Moves given flashcard to other memobox
      */
-    public function moveToMemobox( &$memobox ){
+    public function moveToMemobox( $memobox ){
 
     }
 
 
+    public function user(){
+//        dd('hello in users');
+        return $this->belongsTo( User::class );
+    }
+
+    public function memobox(){
+        return $this->belongsTo( Memobox::class );
+    }
 
 }

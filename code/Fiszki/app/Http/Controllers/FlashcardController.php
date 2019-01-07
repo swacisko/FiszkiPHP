@@ -8,6 +8,7 @@ use App\Flashcard;
 class FlashcardController extends Controller
 {
     public function index(){
+//        dd(config( 'flashcards.memobox.capacity_factor' ));
         $flashcards = Flashcard::all();
         return view( '/flashcards.index', compact('flashcards') );
     }
@@ -17,6 +18,16 @@ class FlashcardController extends Controller
     public function create(){
 
         return view('/flashcards.create');
+    }
+
+    public function validateFlashcard(){
+        $validated = request()->validate([ // if fails redirects to previous page and in $errors there are errors given
+            'category' => ['required','min:3'],
+            'side1_text' => 'required|min:5',
+            'side2_text' => 'required|min:5'
+        ]);
+
+        return $validated;
     }
 
     public function store(){
@@ -37,11 +48,13 @@ class FlashcardController extends Controller
 //            'last_edit_date' => date('Y-m-d H:i:s')
 //        ]);
 
-        $validated = request()->validate([ // if fails redirects to previous page and in $errors there are errors given
-           'category' => ['required','min:3'],
-            'side1_text' => 'required|min:5',
-            'side2_text' => 'required|min:5'
-        ]);
+//        $validated = request()->validate([ // if fails redirects to previous page and in $errors there are errors given
+//           'category' => ['required','min:3'],
+//            'side1_text' => 'required|min:5',
+//            'side2_text' => 'required|min:5'
+//        ]);
+
+            $validated = $this->validateFlashcard();
 
         Flashcard::create(
            array_merge( $validated/*request([ 'category', 'side1_text', 'side2_text' ])*/ ,  ['last_edit_date' => date('Y-m-d H:i:s') ] )
@@ -53,6 +66,7 @@ class FlashcardController extends Controller
     public function edit(Flashcard $flashcard){
 
         return view('/flashcards.edit', compact('flashcard'));
+//        return back();
     }
 
     public function show(Flashcard $flashcard){
@@ -63,14 +77,17 @@ class FlashcardController extends Controller
     public function update( Flashcard $flashcard ){
 //        dd(request()->all());
 
+        $validated = $this->validateFlashcard();
+
 //        $flashcard = Flashcard::findOrFail($id);
-        $flashcard->update( request(['category', 'side1_text','side2_text']) );
+        $flashcard->update( $validated );
 //        $flashcard->category = request('category');
 //        $flashcard->side1_text = request('side1_text');
 //        $flashcard->side2_text = request('side2_text');
 //        $flashcard->save();
 
         return redirect( '/flashcards' );
+//        return back();
     }
 
     public function destroy( Flashcard $flashcard ){

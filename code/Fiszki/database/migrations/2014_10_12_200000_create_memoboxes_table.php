@@ -13,6 +13,7 @@ class CreateMemoboxesTable extends Migration
      */
     public function up()
     {
+//            dd(doubleval( config( 'flashcards.memobox.capacity_factor' ) ));
         Schema::create('memoboxes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('description');
@@ -21,6 +22,9 @@ class CreateMemoboxesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // id of the user that owns this memobox
 
             $table->integer('number_of_compartments');
+            $table->integer( 'first_compartment_size' )->default(30);
+            $table->double('capacity_factor')->default( doubleval( config( 'flashcards.memobox.capacity_factor' ) ) );
+
             $table->timestamps();
         });
 

@@ -12,23 +12,17 @@ class MemoboxesTableSeeder extends Seeder
     public function run()
     {
         $users = App\User::all();
-
-        $flashcards = App\Flashcard::all();
         $nextCard = 0;
-
-//        dd($users);
-
         $memoboxForUser = 0;
 
-        factory( App\Memobox::class, count($users) )->create()->each( function ($m) use (&$users, &$memoboxForUser, &$flashcards, $nextCard){
+        factory( App\Memobox::class, count($users) )->create()->each( function ($m) use (&$users, &$memoboxForUser, $nextCard){
+//            $m->user_id = $users[ $memoboxForUser ]->id;
+//            $memoboxForUser++;
+//            $m->save();
 
-            $m->user_id = $users[ $memoboxForUser ]->id;
+            $users[ $memoboxForUser ]->memoboxes()->save( $m );
             $memoboxForUser++;
-
-            
-
-            $m->save();
-
+            $memoboxForUser %= count($users);
         } );
     }
 }

@@ -16,6 +16,12 @@
 
 <body>
 
+
+    <div class="buttons are-large is-centered">
+        <a class="button is-link" href="/">Home</a>
+        <a class="button is-link" href="{{ url()->previous() }}">Back</a>
+    </div>
+
     <div class="container">
         @yield('content')
     </div>

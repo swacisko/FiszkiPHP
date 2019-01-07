@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'PagesController@home' );
+Route::get('/', 'PagesController@index' );
+Route::get('/learning', 'PagesController@learning' );
+Route::get('/progress', 'PagesController@progress' );
+Route::get('/management', 'PagesController@management' );
 
 
 /*
@@ -30,15 +33,13 @@ Route::get('/', 'PagesController@home' );
  *
  */
 
-Route::get('/learning', 'PagesController@learning' );
-Route::get('/progress', 'PagesController@progress' );
-Route::get('/management', 'PagesController@management' );
 //Route::get('/initDatabase', 'PagesController@initDatabase' );
 
 
 
 
 Route::resource( 'flashcards', 'FlashcardController' );
+Route::resource( 'memoboxes', 'MemoboxesController' );
 
 //Route::get('/flashcards/create', 'FlashcardController@create' );
 //Route::get( '/flashcards/{flashcard}', 'FlashcardController@show' );

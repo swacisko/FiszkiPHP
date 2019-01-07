@@ -15,7 +15,7 @@
             <a href="/progress"> View progress </a>
         </li>
         <li>
-            <a href="/management"> Manage your flashcards</a>
+            <a href="/management"> Manage your flashcards and memoboxes</a>
         </li>
         {{--<li>--}}
             {{--<a href="/initDatabase"> Init database for tests</a>--}}

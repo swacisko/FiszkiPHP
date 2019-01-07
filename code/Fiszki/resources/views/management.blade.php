@@ -4,19 +4,26 @@
 
 @section('content')
 
-    <h1 class="title">Flashcard management section</h1>
+    <h1 class="title">Management section</h1>
 
-    <ul>
-        <li>
-            <a href="/flashcards/create"> Create a flashcard </a>
-        </li>
-        {{--<li>--}}
-            {{--<a href="/flashcards/2/edit"> Edit flashcards </a>--}}
-        {{--</li>--}}
-        <li>
-            <a href="/flashcards"> Show all flashcards </a>
-        </li>
-    </ul>
+    <div class="box">
+        <div class="ref">
+                <a href="/flashcards/create"> Create a flashcard </a>
+        </div>
+
+        <div class="ref">
+            <a href="/flashcards"> Manage your flashcards </a>
+        </div>
+    </div>
+
+
+    <div class="ref box">
+        <a href="/memoboxes"> Manage your memoboxes </a>
+    </div>
+
+
+
+
 
     {{--<div>--}}
         {{--@foreach($flashcards as $f)--}}
