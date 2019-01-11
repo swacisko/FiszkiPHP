@@ -38,8 +38,8 @@ Route::get('/management', 'PagesController@management' );
 
 
 
-Route::resource( 'flashcards', 'FlashcardController' );
-Route::resource( 'memoboxes', 'MemoboxesController' );
+Route::resource( 'flashcards', 'FlashcardController' )->middleware('auth');
+Route::resource( 'memoboxes', 'MemoboxesController' )->middleware('auth');
 
 //Route::get('/flashcards/create', 'FlashcardController@create' );
 //Route::get( '/flashcards/{flashcard}', 'FlashcardController@show' );
@@ -47,3 +47,7 @@ Route::resource( 'memoboxes', 'MemoboxesController' );
 //Route::post('/flashcards', 'FlashcardController@store' );
 //Route::patch( '/flashcards/{flashcard}', 'FlashcardController@update' );
 //Route::delete( '/flashcards/{flashcard}', 'FlashcardController@destroy' );//
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
