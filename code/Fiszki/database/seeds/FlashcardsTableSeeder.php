@@ -23,7 +23,7 @@ class FlashcardsTableSeeder extends Seeder
         $nic = 1;
         $ind = 0;
 
-        factory(App\Flashcard::class, 30)->create()->each(function($f) use ($users, $memoboxes, &$memoId, &$nic, &$noc, &$ind) {
+        factory(App\Flashcard::class, 1 + count($users) * count($memoboxes))->create()->each(function($f) use ($users, $memoboxes, &$memoId, &$nic, &$noc, &$ind) {
 
 //            $ind = rand(0, count($users)-1 );
 

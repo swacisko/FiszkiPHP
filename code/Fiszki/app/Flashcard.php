@@ -9,7 +9,7 @@ use App\Memobox;
 class Flashcard extends Model
 {
     protected $fillable = [
-          'category', 'side1_text', 'side2_text', 'last_edit_date'
+          'category', 'side1_text', 'side2_text', 'last_edit_date', 'user_id'
     ];
 //    protected $guarded = []; // inverse of $fillable
 
@@ -50,7 +50,7 @@ class Flashcard extends Model
 
     public function user(){
 //        dd('hello in users');
-        return $this->belongsTo( User::class );
+        return $this->belongsTo( User::class, 'user_id' );
     }
 
     public function memobox(){

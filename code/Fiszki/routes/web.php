@@ -11,7 +11,7 @@
 |
 */
 Route::get('/', 'PagesController@index' );
-Route::get('/learning', 'PagesController@learning' );
+//Route::get('/learning', 'LearningController@index' );
 Route::get('/progress', 'PagesController@progress' );
 Route::get('/management', 'PagesController@management' );
 
@@ -39,7 +39,14 @@ Route::get('/management', 'PagesController@management' );
 
 
 Route::resource( 'flashcards', 'FlashcardController' )->middleware('auth');
+//Route::resource( 'memoboxes', 'MemoboxesController' )->middleware('can:update,memobox');
 Route::resource( 'memoboxes', 'MemoboxesController' )->middleware('auth');
+
+
+
+Route::get( '/learning/{memobox}', 'LearningController@show' )->middleware('auth');
+Route::get( '/learning/correct_answer', 'LearningController@correct_answer' )->middleware('auth');
+Route::resource( 'learning', 'LearningController' )->middleware('auth');
 
 //Route::get('/flashcards/create', 'FlashcardController@create' );
 //Route::get( '/flashcards/{flashcard}', 'FlashcardController@show' );

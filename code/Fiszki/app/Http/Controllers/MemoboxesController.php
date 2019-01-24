@@ -7,6 +7,19 @@ use Illuminate\Http\Request;
 
 class MemoboxesController extends Controller
 {
+
+
+    public function validateMemobox(){
+        $validated = request()->validate([ // if fails redirects to previous page and in $errors there are errors given
+            'description' => ['required','min:3'],
+            'number_of_compartments' => 'required|integer',
+            'first_compartment_size' => 'required|integer',
+            'capacity_factor' => 'required|numeric|between:1,3',
+        ]);
+
+        return $validated;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,7 @@ class MemoboxesController extends Controller
      */
     public function index()
     {
-        $memoboxes = Memobox::all();
+        $memoboxes = Memobox::where('user_id', auth()->id())->get();
         return view('/memoboxes.index', compact( 'memoboxes' ));
     }
 
@@ -25,7 +38,7 @@ class MemoboxesController extends Controller
      */
     public function create()
     {
-        //
+        return view('/memoboxes.create');
     }
 
     /**
@@ -36,7 +49,11 @@ class MemoboxesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $this->validateMemobox();
+        $validated['user_id'] = auth()->id();
+        Memobox::create($validated);
+
+        return redirect('/memoboxes');
     }
 
     /**
@@ -47,7 +64,8 @@ class MemoboxesController extends Controller
      */
     public function show(Memobox $memobox)
     {
-        //
+//        $this->authorize('view', $memobox);
+        return view('/memoboxes/show', compact('memobox'));
     }
 
     /**
@@ -58,7 +76,8 @@ class MemoboxesController extends Controller
      */
     public function edit(Memobox $memobox)
     {
-        //
+//        $this->authorize('update', $memobox);
+        return view('/memoboxes/edit', compact('memobox'));
     }
 
     /**
@@ -70,7 +89,10 @@ class MemoboxesController extends Controller
      */
     public function update(Request $request, Memobox $memobox)
     {
-        //
+        $validated = $this->validateMemobox();
+//        $this->authorize('update', $validated);
+        $memobox->update($validated);
+        return redirect('/memoboxes');
     }
 
     /**
@@ -81,6 +103,7 @@ class MemoboxesController extends Controller
      */
     public function destroy(Memobox $memobox)
     {
-        //
+        $memobox->delete();
+        return redirect('memoboxes');
     }
 }

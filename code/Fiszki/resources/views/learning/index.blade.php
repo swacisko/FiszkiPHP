@@ -4,18 +4,14 @@
 
 @section('content')
 
-    <h1 class="title"> Your memoboxes </h1>
+    <h1 class="title"> Choose memobox from which you would like to learn </h1>
 
-
-    <div>
-        <a href="/memoboxes/create"> Create new memobox </a>
-    </div>
 
     <div class=content>
         @foreach($memoboxes as $m)
             <div class="ref box">
 
-                <a href="/memoboxes/{{ $m->id  }}">
+                <a href="/learning/{{ $m->id  }}">
                     {{$m->description}}
                 </a>
 

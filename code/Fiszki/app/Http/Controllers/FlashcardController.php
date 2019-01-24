@@ -9,7 +9,7 @@ class FlashcardController extends Controller
 {
     public function index(){
 //        dd(config( 'flashcards.memobox.capacity_factor' ));
-        $flashcards = Flashcard::all();
+        $flashcards = Flashcard::where('user_id', auth()->id())->get();
         return view( '/flashcards.index', compact('flashcards') );
     }
 
@@ -54,7 +54,8 @@ class FlashcardController extends Controller
 //            'side2_text' => 'required|min:5'
 //        ]);
 
-            $validated = $this->validateFlashcard();
+        $validated = $this->validateFlashcard();
+        $validated['user_id'] = auth()->id();
 
         Flashcard::create(
            array_merge( $validated/*request([ 'category', 'side1_text', 'side2_text' ])*/ ,  ['last_edit_date' => date('Y-m-d H:i:s') ] )
@@ -65,12 +66,20 @@ class FlashcardController extends Controller
 
     public function edit(Flashcard $flashcard){
 
+        $this->authorize('update', $flashcard);
         return view('/flashcards.edit', compact('flashcard'));
 //        return back();
     }
 
     public function show(Flashcard $flashcard){
 //        $flashcard = Flashcard::findOrFail($id);
+//        dd( $flashcard );
+//        abort_if( $flashcard->user->id !== auth()->id(), 403 );
+//        abort_unless( $flashcard->user->id == auth()->id(), 403 )''
+//        abort_if( \Gate::denies('update', $flashcard), 403 );
+//        abort_unless( \Gate::allows('update', $flashcard), 403 );
+
+//        $this->authorize('update', $flashcard);
         return view('/flashcards/show', compact('flashcard'));
     }
 
