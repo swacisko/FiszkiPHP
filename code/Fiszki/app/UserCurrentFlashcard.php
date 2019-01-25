@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserCurrentFlashcard extends Model
 {
+//    protected $primaryKey = 'memobox_id';
+//    public $incrementing = false;
+
     protected $guarded = [];
 
     /**
@@ -29,4 +32,7 @@ class UserCurrentFlashcard extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function memobox(){
+        return $this->belongsTo(Memobox::class);
+    }
 }

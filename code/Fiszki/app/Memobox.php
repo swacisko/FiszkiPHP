@@ -16,10 +16,19 @@ class Memobox extends Model
      * otherwise size of the $comp-th compartment is returned.
      */
     public function getCompartmentSize($comp){
-        if( $comp < 0 || $comp > $this->number_of_cocmpartments+1 ) return 0;
-        if( $comp == 0 || $comp == $this->number_of_cocmpartments+1 ) return PHP_INT_MAX;
-        else if($comp == 1) return $this->first_compartment_size;
-        else return (int) ( pow( $this->first_compartment_size, $comp-1 ) );
+//        echo("$comp"."</b>");
+        if( $comp < 0 || $comp > $this->number_of_compartments+1 ) return 0;
+        if( $comp == 0 || $comp == $this->number_of_compartments+1 ) return PHP_INT_MAX;
+        else if($comp == 1){
+//            dd($comp);
+            return $this->first_compartment_size;
+        }
+        else{
+//            dd($comp);
+            $val = (int) ( $this->first_compartment_size * pow( $this->capacity_factor, $comp-1 ) );
+//            dd($val);
+            return $val;
+        }
     }
 
     /*
@@ -36,15 +45,31 @@ class Memobox extends Model
 
     }
 
-    /*
+    /**
      * @return returns flashcards that are in compartment with given numebr
      */
     public function get_flashcards_in_compartment(int $comp){
-        $flashcards = Flashcard::with( 'user_id', $this->user_id )->with( 'number_of_compartment', $comp )->orderBy( 'number_in_compartment', 'ASC' )->get();
+        $flashcards = Flashcard::where( 'user_id', $this->user_id )->where( 'number_of_compartment', $comp )->orderBy( 'number_in_compartment', 'ASC' )->get();
         return $flashcards;
     }
 
-    /*
+    /**
+     * @param int $comp
+     * @return int number of flashcards in given comperment
+     */
+    public function count_flashcards_in_compartment( int $comp ){
+        return count( $this->get_flashcards_in_compartment($comp) );
+    }
+
+    public function count_all_flashcards(){
+        $sum = 0;
+        for( $i=0; $i < $this->number_of_compartments+2; $i++ ){
+            $sum += $this->count_flashcards_in_compartment($i);
+        }
+        return $sum;
+    }
+
+    /**
      * @return returns the first flashcard in given compartment or null if there are no flashcards in that compartment.
      * (first flashcard is the one that is there longest).
      */
@@ -83,7 +108,10 @@ class Memobox extends Model
         $ucf = $this->user_current_flashcard;
 //        dd($ucf);
         if( isset($ucf) ) return Flashcard::where( 'id', $ucf->flashcard_id  )->first();
-        else return null;
+        else{
+            dd('returns null in Memobox.current_flashcard()');
+            return null;
+        }
 //        return $ucf->belongsTo(Flashcard::class);
     }
 
@@ -100,6 +128,12 @@ class Memobox extends Model
 
     public function flashcards(){
         return $this->hasMany( Flashcard::class );
+    }
+
+    public function get_next_compartment_to_learn_from(){
+        $comp = $this->current_flashcard()->number_of_compartment + 1;
+        if($comp > $this->number_of_compartments) $comp = 1;
+        return $comp;
     }
 
 }

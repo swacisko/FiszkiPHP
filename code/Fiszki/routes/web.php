@@ -43,9 +43,10 @@ Route::resource( 'flashcards', 'FlashcardController' )->middleware('auth');
 Route::resource( 'memoboxes', 'MemoboxesController' )->middleware('auth');
 
 
-
+Route::get( '/learning/correct_answer/{flashcard}', 'LearningController@correct_answer' )->middleware('auth');
+Route::get( '/learning/wrong_answer/{flashcard}', 'LearningController@wrong_answer' )->middleware('auth');
+Route::get( '/learning/flip/{flashcard}', 'LearningController@flip' )->middleware('auth');
 Route::get( '/learning/{memobox}', 'LearningController@show' )->middleware('auth');
-Route::get( '/learning/correct_answer', 'LearningController@correct_answer' )->middleware('auth');
 Route::resource( 'learning', 'LearningController' )->middleware('auth');
 
 //Route::get('/flashcards/create', 'FlashcardController@create' );

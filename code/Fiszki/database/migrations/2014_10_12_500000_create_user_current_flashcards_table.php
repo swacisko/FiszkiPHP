@@ -18,7 +18,8 @@ class CreateUserCurrentFlashcardsTable extends Migration
          * Table representing current state of a user for given memobox.
          */
         Schema::create('user_current_flashcards', function(Blueprint $table){
-//            $table->increments('id');
+            $table->increments('id');
+
 
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

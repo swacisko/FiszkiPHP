@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Memobox;
+use App\Flashcard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class LearningController extends Controller
 {
@@ -19,7 +21,7 @@ class LearningController extends Controller
 //        dd($memobox);
         $flashcard = $memobox->current_flashcard();
 //        dd($flashcard);
-        if( isset($flashcard) ) return view('/learning/show', compact('flashcard'));
+        if( isset($flashcard) ) return view('/learning/show', compact('flashcard', 'memobox'));
         else{
 
             echo("There are no flashcards in memobox --->  $memobox->description");
@@ -29,23 +31,46 @@ class LearningController extends Controller
 
     public function correct_answer( Flashcard $flashcard )
     {
-        dd('siemka');
         $memobox = $flashcard->memobox;
-        $current_compartment = $flashcard->number_in_compartment;
+        $flashcard->moveToNextCompartment();
 
-        $flashcard->number_in_compartment++;
-        $flashcard->save();
-
-        $flashcard = $memobox->get_first_flasshcard_in_compartment;
-        $ucf = $memobox->user_current_flashcard();
-        $ucf->flashcard()->associate($flashcard);
-        $ucf->save();
-
-        dd('siemka');
-//        return redirect( '/learning/{ $memobox->id }' );
+//        dd($flashcard);
+//        $current_compartment = $flashcard->number_in_compartment;
+//
+//        $flashcard->number_of_compartment++;
+//        $flashcard->save();
+//
+//
+//        $comp = $memobox->get_next_compartment_to_learn_from();
+//        $flashcard = $memobox->get_first_flashcard_in_compartment($comp);
+//
+//        $ucf = $memobox->user_current_flashcard;
+////        dd($ucf);
+//        $ucf->flashcard_id = $flashcard->id;
+////        dd($ucf);
+//        $ucf->save();
+//
+////        dd($ucf);
+////        $flashcard->user_current_flashcard()->save( compact('ucf') );
+//
+////        dd($flashcard->user_current_flashcard);
+////        $flashcard->user_current_flashcard()->associate( $ucf );
+////        $flashcard->save();
+//
+////        dd($ucf);
+////        $ucf->flashcard()->associate($flashcard);
+////        $ucf->save();
+//
+////        dd('przeszlo');
+        return Redirect::to( "/learning/$memobox->id" );
     }
 
     public function wrong_answer( Flashcard $flashcard ){
+
+        redirect( '/learning/index' );
+    }
+
+    public function flip( Flashcard $flashcard ){
 
     }
 }

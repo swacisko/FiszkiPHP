@@ -30,7 +30,34 @@ class Flashcard extends Model
      * Moves given flashcard to next compartment within the same memobox
      */
     public function moveToNextCompartment(){
-        
+        $memobox = $this->memobox;
+//        $current_compartment = $this->number_in_compartment;
+//
+//        $this->number_of_compartment++;
+        $this->save();
+
+
+        $comp = $memobox->get_next_compartment_to_learn_from();
+        $flashcard = $memobox->get_first_flashcard_in_compartment($comp);
+
+        $ucf = $memobox->user_current_flashcard;
+//        dd($ucf);
+        $ucf->flashcard_id = $flashcard->id;
+//        dd($ucf);
+        $ucf->save();
+
+//        dd($ucf);
+//        $flashcard->user_current_flashcard()->save( compact('ucf') );
+
+//        dd($flashcard->user_current_flashcard);
+//        $flashcard->user_current_flashcard()->associate( $ucf );
+//        $flashcard->save();
+
+//        dd($ucf);
+//        $ucf->flashcard()->associate($flashcard);
+//        $ucf->save();
+
+//        dd('przeszlo');
     }
 
     /*
@@ -57,4 +84,8 @@ class Flashcard extends Model
         return $this->belongsTo( Memobox::class );
     }
 
+    public function user_current_flashcard(){
+//        dd('here');
+        return $this->hasOne( UserCurrentFlashcard::class );
+    }
 }
