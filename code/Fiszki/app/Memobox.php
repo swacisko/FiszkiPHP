@@ -34,9 +34,16 @@ class Memobox extends Model
     /*
      * adds to given memobox c flashcards from $flashcards, indexed beg, beg+1, ... , min( beg+c-1, count($flashcards) )
      */
-    public function addFlashcardToMemobox( $flashcards, $beg, $c ){
+    public function addFlashcardToMemobox( array $flashcards, $beg, $c ){
         $currentComp = 1;
         $inInComp = 0;
+
+        for($i = $beg; $i < min( count($flashcards)-1,$beg + $c-1 ); $i++){
+            $f = $flashcards[$i];
+
+            $f->memobox_id = $this->id;
+            $f->moveToCompartment(0);
+        }
 
 
     }
@@ -46,10 +53,20 @@ class Memobox extends Model
     }
 
     /**
+     * @param int $comp
+     * @returns maximal number_in_compartment value of a flashcard in given by parameter compartment number
+     */
+    public function get_max_number_in_compartment(int $comp){
+        return Flashcard::where( 'user_id', $this->user_id )->where( 'number_of_compartment', $comp )->max('number_in_compartment');
+    }
+
+    /**
      * @return returns flashcards that are in compartment with given numebr
      */
     public function get_flashcards_in_compartment(int $comp){
-        $flashcards = Flashcard::where( 'user_id', $this->user_id )->where( 'number_of_compartment', $comp )->orderBy( 'number_in_compartment', 'ASC' )->get();
+//        dd($comp);
+        $flashcards = Flashcard::where( 'user_id', auth()->id() )->where( 'number_of_compartment', $comp )->orderBy( 'number_in_compartment', 'ASC' )->get();
+//        dd($flashcards);
         return $flashcards;
     }
 
@@ -61,7 +78,22 @@ class Memobox extends Model
         return count( $this->get_flashcards_in_compartment($comp) );
     }
 
+
+    /**
+     * @return int all flashcards that are in given memobox
+     */
     public function count_all_flashcards(){
+        $sum = 0;
+        for( $i=0; $i < $this->number_of_compartments+2; $i++ ){
+            $sum += $this->count_flashcards_in_compartment($i);
+        }
+        return $sum;
+    }
+
+    /**
+     * @return int all flashcards that are in proper compartments of given memobox.
+     */
+    public function count_flashcards_in_compartments(){
         $sum = 0;
         for( $i=0; $i < $this->number_of_compartments+2; $i++ ){
             $sum += $this->count_flashcards_in_compartment($i);
@@ -75,6 +107,9 @@ class Memobox extends Model
      */
     public function get_first_flashcard_in_compartment( $comp ){
         $flashcards = $this->get_flashcards_in_compartment($comp);
+
+//            dd($comp);
+
         if( count($flashcards) > 0 ) return $flashcards[0];
         else return null;
     }
@@ -87,6 +122,8 @@ class Memobox extends Model
 //        dd($flashcards);
         return count($flashcards);
     }
+
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne user_current_flashcard associated with this memobox
@@ -130,10 +167,37 @@ class Memobox extends Model
         return $this->hasMany( Flashcard::class );
     }
 
-    public function get_next_compartment_to_learn_from(){
-        $comp = $this->current_flashcard()->number_of_compartment + 1;
-        if($comp > $this->number_of_compartments) $comp = 1;
-        return $comp;
+
+    public function get_next_compartment_to_learn_from( int $currentComp ){
+//        $currentComp = $this->current_flashcard()->number_of_compartment;
+
+        if( $this->count_flashcards_in_compartment($currentComp)
+            > max($this->getCompartmentSize($currentComp) / 2, $this->getCompartmentSize($currentComp) /*$this->beginCompSize*/ - 10 ) ){
+            return $currentComp;
+        }
+
+//        {{ echo("$currentComp"); }}
+
+        $i = $this->number_of_compartments;
+        $m = $i;
+        $M = 0;
+        $c = 0;
+        for( ; $i >= 0; $i-- ){
+            $c = $this->count_flashcards_in_compartment($i);
+            if( $c >= $this->getCompartmentSize($i) ) return $i;
+
+            $compSize = $this->getCompartmentSize($i);
+            $ratio = $c / $compSize;
+
+            if( $ratio > $M ){
+                $M = $ratio;
+                $m = $i;
+            }
+        }
+
+        if( $this->count_flashcards_in_compartment(0) > 0 ) return 0; // If there are flashcards to learn, i add them to memobox. Otherwise I learn from the compartment with
+        // the largest ratio     flashcards / capacity
+        else return $m;
     }
 
 }

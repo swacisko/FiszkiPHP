@@ -7,6 +7,14 @@ use App\Flashcard;
 
 class FlashcardController extends Controller
 {
+    /**
+     * function returns and array of memoboxes that are represented by select element with given name
+     * @param $selectName
+     */
+    public function getMemoboxesFromRequestSelectForm( $selectName ){
+
+    }
+
     public function index(){
 //        dd(config( 'flashcards.memobox.capacity_factor' ));
         $flashcards = Flashcard::where('user_id', auth()->id())->get();

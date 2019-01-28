@@ -6,7 +6,6 @@
 
     <h1 class="title"> YAY! Start learning! </h1>
 
-    @include('memoboxes.memobox_statistics')
 
     <div class="content box">
         <div class="box has-text-centered">
@@ -21,7 +20,7 @@
             </div>
             <div class="column has-text-centered">
                 <legend class="label">Side 2 text</legend>
-                {{ $flashcard->side2_text }}
+                {{ $flipped ? $flashcard->side2_text : "?" }}
             </div>
 
         </div>
@@ -31,13 +30,16 @@
     <div class="field">
         <div class="control">
             <a href="/learning/flip/{{$flashcard->id}}"> <button type="submit" class="button is-link" >FLIP</button> </a>
-            <a href="/learning/correct_answer/{{ $flashcard->id  }}"> <button type="submit" class="button" >I KNEW IT!</button> </a>
+            <a href="/learning/correct_answer/{{ $flashcard->id  }}" class="button is-success"> I KNEW IT!{{--<button type="submit" class="button is-green" >I KNEW IT!</button>--}} </a>
             {{--<form method="GET" action="/learning/correct_answer"> <button type="submit" class="button" >I KNEW IT!</button> </form>--}}
-            <a href="/learning/wrong_answer/{{ $flashcard->id  }}"> <button type="submit" class="button" >NOT YET</button> </a>
+            <a href="/learning/wrong_answer/{{ $flashcard->id  }}" class="button is-danger"> NOT YET {{-- <button type="submit" class="button" >NOT YET</button>--}} </a>
             <a class="button" href="#">Useless Button</a>
         </div>
     </div>
 
+    @include('memoboxes.memobox_statistics')
+
+    @include( 'flashcards.current_flashcard_info' )
 
 
 @endsection

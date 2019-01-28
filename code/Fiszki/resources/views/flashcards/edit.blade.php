@@ -35,11 +35,25 @@
                 </div>
             </div>
 
+            <div class="box select is-multiple">
+                <label> Select memoboxes to which you want to add this flashcard </label>
+                <select multiple name="select_memoboxes">
+                    {{--<option value="siemka">siemka</option>--}}
+                    @foreach( \App\Memobox::where( 'user_id', auth()->id() )->get() as $memobox )
+
+                        <option value="{{ $memobox->description  }}">{{ $memobox->description  }}</option>
+
+                        @endforeach
+                </select>
+            </div>
+
             <div class="field">
                 <div class="control">
                     <button type="submit" class="button is-link">Update</button>
                 </div>
             </div>
+
+
     </form>
 
     <form method="POST" action="/flashcards/{{ $flashcard->id  }}">
@@ -47,10 +61,12 @@
         @method('DELETE')
 
         <div class="control">
-            <button type="submit" class="button">Delete</button>
+            <button type="submit" class="button is-danger">Delete</button>
         </div>
 
     </form>
+
+
 
     @include('errors')
 
