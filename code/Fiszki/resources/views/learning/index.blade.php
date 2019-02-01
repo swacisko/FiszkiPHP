@@ -4,10 +4,10 @@
 
 @section('content')
 
-    <h1 class="title"> Choose memobox from which you would like to learn </h1>
+    <h1 class="title has-text-centered"> Choose memobox from which you would like to learn </h1>
 
 
-    <div class=content>
+    <div class="content has-text-centered">
         @foreach($memoboxes as $m)
             <div class="ref box">
 

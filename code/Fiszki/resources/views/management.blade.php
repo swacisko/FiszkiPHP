@@ -4,20 +4,22 @@
 
 @section('content')
 
-    <h1 class="title">Management section</h1>
+    <h1 class="title has-text-centered">Management section</h1>
 
-    <div class="box">
+    <div class="box has-text-centered">
+        <legend class="label has-text-centered"> Flashcard management </legend>
         <div class="ref">
                 <a href="/flashcards/create"> Create a flashcard </a>
         </div>
 
         <div class="ref">
-            <a href="/flashcards"> Manage your flashcards </a>
+            <a href="/flashcards"> Show your flashcards </a>
         </div>
     </div>
 
 
-    <div class="ref box">
+    <div class="ref box has-text-centered">
+        <legend class="label has-text-centered"> Memobox management </legend>
         <a href="/memoboxes"> Manage your memoboxes </a>
     </div>
 

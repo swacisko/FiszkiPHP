@@ -54,7 +54,7 @@ class MemoboxPolicy
      */
     public function delete(User $user, Memobox $memobox)
     {
-        //
+        return $user->id == $memobox->user_id;
     }
 
     /**

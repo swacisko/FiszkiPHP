@@ -11,6 +11,18 @@ class Memobox extends Model
     protected $guarded = [];
 
 
+    /**
+     * @returns array containing string representing all categories among flashcards that are in this memobox
+     */
+    public function getAllCategoriesInMemobox(){
+        $categories = Flashcard::select('category')->where('user_id', auth()->id())->where('memobox_id', $this->id)->get( /*['category']*/ )->toArray();
+//        dd($categories);
+        $res = [];
+        foreach( $categories as $key => $c ) array_push( $res, $c['category'] );
+//        dd($res);
+        return $res;
+    }
+
     /*
      * returns size of given compartment. If $comp is the 0-th or number_of_compartments-th compartment, then INF will be returned (there may be infinitely many flashcards in those compartments.
      * otherwise size of the $comp-th compartment is returned.
@@ -65,7 +77,7 @@ class Memobox extends Model
      */
     public function get_flashcards_in_compartment(int $comp){
 //        dd($comp);
-        $flashcards = Flashcard::where( 'user_id', auth()->id() )->where( 'number_of_compartment', $comp )->orderBy( 'number_in_compartment', 'ASC' )->get();
+        $flashcards = Flashcard::where( 'user_id', auth()->id() )->where( 'memobox_id', $this->id )->where( 'number_of_compartment', $comp )->orderBy( 'number_in_compartment', 'ASC' )->get();
 //        dd($flashcards);
         return $flashcards;
     }
@@ -95,7 +107,7 @@ class Memobox extends Model
      */
     public function count_flashcards_in_compartments(){
         $sum = 0;
-        for( $i=0; $i < $this->number_of_compartments+2; $i++ ){
+        for( $i=1; $i <= $this->number_of_compartments; $i++ ){
             $sum += $this->count_flashcards_in_compartment($i);
         }
         return $sum;
@@ -146,7 +158,7 @@ class Memobox extends Model
 //        dd($ucf);
         if( isset($ucf) ) return Flashcard::where( 'id', $ucf->flashcard_id  )->first();
         else{
-            dd('returns null in Memobox.current_flashcard()');
+//            dd('returns null in Memobox.current_flashcard()');
             return null;
         }
 //        return $ucf->belongsTo(Flashcard::class);

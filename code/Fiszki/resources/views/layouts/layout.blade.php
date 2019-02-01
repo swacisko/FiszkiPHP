@@ -34,6 +34,14 @@
                     Home
                 </a>
 
+                <a class="navbar-item" href="/learning" >
+                    Learning
+                </a>
+
+                <a class="navbar-item" href="/management" >
+                    Management
+                </a>
+
                 <a class="navbar-item" href="{{ url()->previous() }}" >
                     Back
                 </a>

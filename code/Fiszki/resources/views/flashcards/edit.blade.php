@@ -14,44 +14,36 @@
         @method('PATCH')
 {{--        {{ method_field('PATCH')  }}--}}
 
-            <div class="field" >
-                <label class="label" for="Category">Category</label>
-                <div class="control" >
-                    <input type="text" class="input" name="category" placeholder="Category" value="{{ $flashcard->category  }}" required>
-                </div>
-            </div>
+            {{--<div class="field" >--}}
+                {{--<label class="label" for="Category">Category</label>--}}
+                {{--<div class="control" >--}}
+                    {{--<input type="text" class="input" name="category" placeholder="Category" value="{{ $flashcard->category  }}" required>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-            <div class="field">
-                <label class="label" for="side1_text"> Side1 text</label>
-                <div class="control">
-                    <textarea name="side1_text" class="textarea" placeholder="Side 1 text" required >{{ $flashcard->side1_text  }}</textarea>
-                </div>
-            </div>
+            {{--<div class="field">--}}
+                {{--<label class="label" for="side1_text"> Side1 text</label>--}}
+                {{--<div class="control">--}}
+                    {{--<textarea name="side1_text" class="textarea" placeholder="Side 1 text" required >{{ $flashcard->side1_text  }}</textarea>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-            <div class="field">
-                <label class="label" for="side2_text"> Side2 text</label>
-                <div class="control">
-                    <textarea name="side2_text" class="textarea" placeholder="Side 2 text" required>  {{ $flashcard->side2_text  }} </textarea>
-                </div>
-            </div>
+            {{--<div class="field">--}}
+                {{--<label class="label" for="side2_text"> Side2 text</label>--}}
+                {{--<div class="control">--}}
+                    {{--<textarea name="side2_text" class="textarea" placeholder="Side 2 text" required>  {{ $flashcard->side2_text  }} </textarea>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-            <div class="box select is-multiple">
-                <label> Select memoboxes to which you want to add this flashcard </label>
-                <select multiple name="select_memoboxes">
-                    {{--<option value="siemka">siemka</option>--}}
-                    @foreach( \App\Memobox::where( 'user_id', auth()->id() )->get() as $memobox )
+            {{--@include('memoboxes.select_memoboxes')--}}
 
-                        <option value="{{ $memobox->description  }}">{{ $memobox->description  }}</option>
+            {{--<div class="field">--}}
+                {{--<div class="control">--}}
+                    {{--<button type="submit" class="button is-link">Update</button>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-                        @endforeach
-                </select>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <button type="submit" class="button is-link">Update</button>
-                </div>
-            </div>
+        @include('flashcards.create_or_update')
 
 
     </form>

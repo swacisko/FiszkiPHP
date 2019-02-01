@@ -26,7 +26,7 @@ class CreateFlashcardsTable extends Migration
 
 
             $table->unsignedInteger('parent_flashcard_id')->nullable()->default(NULL);
-            $table->foreign('parent_flashcard_id')->references('id')->on('flashcards');
+            $table->foreign('parent_flashcard_id')->references('id')->on('flashcards')->onDelete('set null');
 
             $table->string('category')->default('no category');
             $table->string('side1_text',500)->default('');

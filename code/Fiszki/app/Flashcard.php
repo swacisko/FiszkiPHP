@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Flashcard extends Model
 {
-    protected $fillable = [
-          'category', 'side1_text', 'side2_text', 'last_edit_date', 'user_id'
-    ];
-//    protected $guarded = []; // inverse of $fillable
+//    protected $fillable = [
+//          'category', 'side1_text', 'side2_text', 'last_edit_date', 'user_id', 'memobox_id', 'number_of_compartment'
+//    ];
+    protected $guarded = ['id']; // inverse of $fillable
 
 //    public function update( $f ){
 //        foreach( $f as $key => $value ){
@@ -25,6 +25,9 @@ class Flashcard extends Model
      */
     public function copyToMemobox( Memobox $memobox ){
         $flashcard = new Flashcard( $this );
+        $flashcard->memobox_id = $memobox->id;
+        $flashcard->save();
+        $flashcard->moveToCompartment(0);
 
         dd($flashcard);
 
@@ -62,6 +65,10 @@ class Flashcard extends Model
         $memobox = $this->memobox;
 //        $currentComp= $this->number_in_compartment;
         $oldComp = $this->number_of_compartment;
+
+//      dd([$this->number_of_compartment, $oldComp]);
+
+
         if( $this->number_of_compartment <= $memobox->number_of_compartments ){
 //            $this->number_of_compartment++;
             $this->number_of_compartment = $compNum;
@@ -69,7 +76,6 @@ class Flashcard extends Model
             $this->save();
         }
 
-//
         $comp = $memobox->get_next_compartment_to_learn_from( $oldComp );
 //        dd($comp);
 //        if( $comp != $this->number_in_compartment-1 ){

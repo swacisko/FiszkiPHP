@@ -3,7 +3,7 @@
 
 <div class="content">
     <div class="box">
-        <legend class="label has-text-centered">Memobox compartment statistics </legend>
+        <legend class="label has-text-centered"> Memobox compartment statistics </legend>
         <ul>
             <li>Total number of flashcards in memobox: {{ $memobox->count_all_flashcards()  }} </li>
 
@@ -26,7 +26,7 @@
                 @if( $i == 0 )
                         <li>
                             Flashcards in {{$i}} compartment (waiting to be learned): {{ $memobox->count_flashcards_in_compartment($i)  }}
-                            <progress class="progress is-{{ $i == 0 ? "danger" : "black"  }}" value="{{ $memobox->count_flashcards_in_compartment($i) }}" max="{{ $memobox->count_all_flashcards() }}"></progress>
+                            <progress class="progress is-{{ $memobox->current_flashcard()->number_of_compartment == 0 ? "danger" : "info"  }}" value="{{ $memobox->count_flashcards_in_compartment($i) }}" max="{{ $memobox->count_all_flashcards() }}"></progress>
                         </li>
                 @elseif( $i == $memobox->number_of_compartments+1 )
                        <li>

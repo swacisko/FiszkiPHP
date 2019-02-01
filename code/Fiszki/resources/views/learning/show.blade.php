@@ -7,19 +7,19 @@
     <h1 class="title"> YAY! Start learning! </h1>
 
 
-    <div class="content box">
+    <div class="content box is-large">
         <div class="box has-text-centered">
-            <legend class="label">Category</legend>
+            <legend class="label is-small">Category</legend>
             {{ $flashcard->category }}
         </div>
 
         <div class="columns box">
             <div class="column has-text-centered">
-                <legend class="label">Side 1 text</legend>
+                <legend class="label is-small">Side 1 text</legend>
                 {{ $flashcard->side1_text }}
             </div>
             <div class="column has-text-centered">
-                <legend class="label">Side 2 text</legend>
+                <legend class="label is-small">Side 2 text</legend>
                 {{ $flipped ? $flashcard->side2_text : "?" }}
             </div>
 
@@ -37,9 +37,9 @@
         </div>
     </div>
 
-    @include('memoboxes.memobox_statistics')
 
-    @include( 'flashcards.current_flashcard_info' )
+    @include('memoboxes.memobox_statistics')
+    {{--@include( 'flashcards.current_flashcard_info' )--}}
 
 
 @endsection

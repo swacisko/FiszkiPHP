@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\UserCurrentFlashcard;
 use Illuminate\Http\Request;
 use App\Flashcard;
+use App\Memobox;
+
 
 class FlashcardController extends Controller
 {
@@ -12,8 +15,19 @@ class FlashcardController extends Controller
      * @param $selectName
      */
     public function getMemoboxesFromRequestSelectForm( $selectName ){
+        $select = request($selectName);
+//        dd($select);
+        $memoboxes = array();
+        foreach( $select as $description ){
+            $m = Memobox::where( 'user_id', auth()->id() )->where( 'description', $description )->get();
 
+            if( isset($m) && count($m) == 1 ) array_push($memoboxes, $m[0] );
+        }
+
+//        dd($memoboxes);
+        return $memoboxes;
     }
+
 
     public function index(){
 //        dd(config( 'flashcards.memobox.capacity_factor' ));
@@ -39,35 +53,64 @@ class FlashcardController extends Controller
     }
 
     public function store(){
+//        dd(request());
+        $memoboxes = $this->getMemoboxesFromRequestSelectForm( 'select_memoboxes' );
+//    dd($memoboxes);
 
-//        $f = new Flashcard();
-//        $f->user_id = 1;
-//        $f->category = request( 'category' );
-//        $f->side1_text = request('side1_text');
-//        $f->side2_text = request("side2_text");
-//        $f->last_edit_date = date('Y-m-d H:i:s');
-//        $f->save();
+        foreach( $memoboxes as $memobox ){
+    //        $f = new Flashcard();
+    //        $f->user_id = 1;
+    //        $f->category = request( 'category' );
+    //        $f->side1_text = request('side1_text');
+    //        $f->side2_text = request("side2_text");
+    //        $f->last_edit_date = date('Y-m-d H:i:s');
+    //        $f->save();
 
 
-//        Flashcard::create([
-//            'category' => request('category'),
-//            'side1_text' => request('side1_text'),
-//            'side2_text' => request('side2_text'),
-//            'last_edit_date' => date('Y-m-d H:i:s')
-//        ]);
+    //        Flashcard::create([
+    //            'category' => request('category'),
+    //            'side1_text' => request('side1_text'),
+    //            'side2_text' => request('side2_text'),
+    //            'last_edit_date' => date('Y-m-d H:i:s')
+    //        ]);
 
-//        $validated = request()->validate([ // if fails redirects to previous page and in $errors there are errors given
-//           'category' => ['required','min:3'],
-//            'side1_text' => 'required|min:5',
-//            'side2_text' => 'required|min:5'
-//        ]);
+    //        $validated = request()->validate([ // if fails redirects to previous page and in $errors there are errors given
+    //           'category' => ['required','min:3'],
+    //            'side1_text' => 'required|min:5',
+    //            'side2_text' => 'required|min:5'
+    //        ]);
 
-        $validated = $this->validateFlashcard();
-        $validated['user_id'] = auth()->id();
+//            dd($memobox);
+            $validated = $this->validateFlashcard();
+            $validated['user_id'] = auth()->id();
+            $validated['memobox_id'] = $memobox->id;
+            $validated['number_of_compartment'] = 0;
+            $validated['number_in_compartment'] = 0;
 
-        Flashcard::create(
-           array_merge( $validated/*request([ 'category', 'side1_text', 'side2_text' ])*/ ,  ['last_edit_date' => date('Y-m-d H:i:s') ] )
-        );
+            $f = Flashcard::create(
+               array_merge( $validated/*request([ 'category', 'side1_text', 'side2_text' ])*/ ,  ['last_edit_date' => date('Y-m-d H:i:s') ] )
+            );
+
+
+            if( $memobox->count_all_flashcards() > 0 ){
+                $ucf = $memobox->user_current_flashcard;
+                if( !isset($ucf) ){
+                    UserCurrentFlashcard::create([
+                       'user_id' => auth()->id(),
+                       'flashcard_id' => $f->id,
+                        'memobox_id' => $memobox->id
+                    ]);
+                }else{
+                    if( $ucf->flashcard->number_of_compartment > $memobox->number_of_compartments ){
+                        $ucf->update([ 'flashcard_id' => $f->id ]);
+                    }
+                }
+            }
+
+            $f->moveToCompartment(0);
+
+
+        }
 
         return redirect( '/management' );
     }
@@ -94,7 +137,12 @@ class FlashcardController extends Controller
     public function update( Flashcard $flashcard ){
 //        dd(request()->all());
 
+//        $memoboxes = $this->getMemoboxesFromRequestSelectForm( 'select_memoboxes' );
+
+
         $validated = $this->validateFlashcard();
+
+
 
 //        $flashcard = Flashcard::findOrFail($id);
         $flashcard->update( $validated );

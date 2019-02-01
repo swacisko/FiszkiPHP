@@ -22,13 +22,13 @@ class CreateUserCurrentFlashcardsTable extends Migration
 
 
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedInteger('flashcard_id');
-            $table->foreign('flashcard_id')->references('id')->on('flashcards');
+            $table->foreign('flashcard_id')->references('id')->on('flashcards')->onDelete('cascade');
 
             $table->unsignedInteger('memobox_id');
-            $table->foreign( 'memobox_id' )->references('id')->on('memoboxes');
+            $table->foreign( 'memobox_id' )->references('id')->on('memoboxes')->onDelete('cascade');
 
 //            $table->unsignedInteger('current_compartment')->default(0);
 
